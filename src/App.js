@@ -1,39 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux'
 import drippLogo from './dripp-logo.svg'
 import './App.css';
+import Reset from './components/Reset';
+import AddMoney from './components/AddMoney';
 
-const App = () => {
-  const initialAmount = 0
-  const [amount, setAmount] = useState(initialAmount)
 
-  const handleAddAmount = ({ value = 5}) => {
-   setAmount((prevAmount) => prevAmount + value)
-  }
+const mapStateToProps = (state) => {
+ return {
+   totalAmount: state.amountReducer.amount,
+ }
+}
 
-  const handleResetAmount = ({value = initialAmount}) => {
-    const msg = `Are you sure you want to reset?`
-    if (window.confirm(msg)) {
-      setAmount(initialAmount)
-    }
-  }
+
+
+const App = ({ totalAmount}) => {
+  
   return (
     <div className="app">
       <img src={drippLogo} alt="Dripp" className="logo" />
 
-      <button className="btn btn--primary" onClick={handleAddAmount}>Save $5</button>
+      <AddMoney amount={10} />
 
       <div className="success">
-  <p>Congrats! You've saved <span className="amount">${amount}</span> this week!</p>
+        <p>Congrats! You've saved <span className="amount">${totalAmount}</span> this week!</p>
       </div>
 
-      <p className="total-amount">You've saved ${amount} in total.</p>
-
-      <button className="btn" onClick={handleResetAmount}>Reset Amount</button>
-      <p className="reset-message">
-        Reset amount once you’ve put the saved amount into savings or paid off your credit card.
-      </p>
+      <p className="total-amount">You've saved ${totalAmount} in total.</p>
+      <Reset />
     </div>
   );
 }
 
-export default App;
+export default connect(mapStateToProps)(App);
