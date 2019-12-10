@@ -79,3 +79,8 @@ body {
   font-weight: 700;
   color: var(--color-primary);
 }
+
+.reset-message {
+  max-width: 24rem;
+  margin: 1rem auto;
+}

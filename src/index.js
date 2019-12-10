@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import drippApp from './reducers'
+import store from './store.js'
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
-
-const store = createStore(drippApp)
 
 ReactDOM.render(
   <Provider store={store}>

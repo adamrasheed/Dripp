@@ -1,7 +1,9 @@
 import { ADD_AMOUNT, RESET_AMOUNT } from '../actionTypes'
+import moment from 'moment'
 
 export const initialAmountState = {
-  amount: 0
+  amount: 0,
+  amountThisWeek: 0
 }
 
 const amountReducer = (state = initialAmountState, action) => {
@@ -12,6 +14,7 @@ const amountReducer = (state = initialAmountState, action) => {
     case ADD_AMOUNT:
       return {
         ...state,
+        date: new Date(),
         amount: initialAmount + action.value
       }
 
