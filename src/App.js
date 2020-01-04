@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './dripp-logo.svg'
 import './App.css';
 
 const App = () => {
-  const initialState = 0
+  const initialState = () => Number(window.localStorage.getItem('count')) || 0
   const [count, setCount] = useState(initialState)
 
   const addAmount = (amount) => {
     setCount(count + amount)
   }
-
+  
   const resetAmount = () => {
     const msg = 'Are you sure you want to reset the amount to $0?'
     if (window.confirm(msg)) {
-      setCount(initialState)
+      setCount(0)
     }
   }
+
+  useEffect(()=> {
+    window.localStorage.setItem('count', count);
+  }, [count])
+
 
   return (
     <div className="app">
