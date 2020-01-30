@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux'
+
+const mapStateToProps = state => state
 
 const Message = ({ count }) => {
   return (
@@ -13,4 +16,4 @@ const Message = ({ count }) => {
   );
 }
 
-export default Message;
+export default connect(mapStateToProps)(Message);

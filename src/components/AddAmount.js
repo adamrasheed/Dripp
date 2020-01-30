@@ -1,4 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { ADD_AMOUNT } from '../reducers';
+
+const mapDispatchToProps = dispatch => ({
+  addAmount: (amount) => dispatch({ type: ADD_AMOUNT, amount })
+})
 
 const AddAmount = ({ addAmount }) => {
   return (
@@ -9,4 +15,4 @@ const AddAmount = ({ addAmount }) => {
   );
 }
 
-export default AddAmount;
+export default connect(null, mapDispatchToProps)(AddAmount);

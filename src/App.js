@@ -1,39 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import logo from './dripp-logo.svg'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import { amountReducer } from './reducers';
+import { saveState, loadState } from './localStorage';
+
 import AddAmount from './components/AddAmount';
-
-import './App.css';
 import Message from './components/Message';
-import ResetAmount from './components/ResetContainer';
+import ResetAmount from './components/ResetAmount';
 
-const App = () => {
-  const initialState = () => Number(window.localStorage.getItem('count')) || 0
-  const [count, setCount] = useState(initialState)
+import logo from './dripp-logo.svg'
+import './App.css';
 
-  const addAmount = (amount) => {
-    setCount(count + amount)
-  }
+const persistedState = loadState()
 
-  const resetAmount = () => {
-    const msg = 'Are you sure you want to reset the amount to $0?'
-    if (window.confirm(msg)) {
-      setCount(0)
-    }
-  }
+const store = createStore(
+  amountReducer,
+  persistedState
+)
 
-  useEffect(() => {
-    window.localStorage.setItem('count', count);
-  }, [count])
+store.subscribe(() => {
+  saveState(store.getState())
+})
 
-
-  return (
+const App = () => (
+  <Provider store={store}>
     <div className="app">
       <img src={logo} alt="Dripp" className="logo" />
-      <AddAmount addAmount={addAmount} />
-      <Message count={count} />
-      <ResetAmount resetAmount={resetAmount} />
+      <AddAmount />
+      <Message />
+      <ResetAmount />
     </div>
-  );
-}
+  </Provider>
+);
 
 export default App;
